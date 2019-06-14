@@ -4,7 +4,7 @@ import lesson2.arrays.Array;
 import lesson2.arrays.ArrayImpl;
 
 public class Main {
-    private static final int ARRAY_LENGTH = 1_000;//_000;
+    private static final int ARRAY_LENGTH = 1_000_000;
     private static Array<Integer> arr1 = new ArrayImpl<>(ARRAY_LENGTH);
     private static Array<Integer> arr2 = new ArrayImpl<>(ARRAY_LENGTH);
     private static Array<Integer> arr3 = new ArrayImpl<>(ARRAY_LENGTH);
