@@ -10,17 +10,27 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public void push(E value) {
+    public boolean push(E value) {
+        if (isFull()) {
+            return false;
+        }
         this.data[size++] = value;
+        return true;
     }
 
     @Override
-    public E pull() {
+    public E pop() {
+        if (size == 0) {
+            return null;
+        }
         return data[--size];
     }
 
     @Override
     public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
         return data[size-1];
     }
 
