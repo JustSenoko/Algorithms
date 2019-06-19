@@ -13,7 +13,7 @@ public class ArrayImpl<E extends Object & Comparable<? super E>> implements Arra
     }
 
     @SuppressWarnings("unchecked")
-    ArrayImpl(int initialCapacity) {
+    public ArrayImpl(int initialCapacity) {
         this.data = (E[]) new Object[initialCapacity];
     }
 
