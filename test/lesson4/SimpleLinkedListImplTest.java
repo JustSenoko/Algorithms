@@ -3,11 +3,13 @@ package lesson4;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class SimpleLinkedListImplTest {
 
-    private LinkedList<Integer> list;
+    private SimpleLinkedListImpl<Integer> list;
 
     @Before
     public void setUp() {
@@ -110,5 +112,15 @@ public class SimpleLinkedListImplTest {
     @Test
     public void getFirstValue() {
         assertEquals((Integer) 5, list.getFirstValue());
+    }
+
+    @Test
+    public void iteratorNext() {
+        Iterator<Integer> iterator = list.iterator();
+        for (int i = 5; i > 0; i--) {
+            assertTrue(iterator.hasNext());
+            assertEquals((Integer) i, iterator.next());
+        }
+        assertFalse(iterator.hasNext());
     }
 }

@@ -1,5 +1,7 @@
 package lesson4;
 
+import java.util.Iterator;
+
 public class SimpleLinkedListImpl<E> implements LinkedList<E> {
 
     Entry<E> first;
@@ -97,5 +99,77 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
     @Override
     public Entry getFirst() {
         return first;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new LinkedListIterator<>(this);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static class LinkedListIterator<E> implements ListIterator<E> {
+
+        private SimpleLinkedListImpl list;
+        private Entry<E> current;
+        private Entry<E> previous;
+
+        LinkedListIterator(SimpleLinkedListImpl list) {
+            this.list = list;
+            reset();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            E nextValue = current.getValue();
+            previous = current;
+            current = current.getNext();
+            return nextValue;
+        }
+
+        @Override
+        public void reset() {
+            current = list.first;
+            previous = null;
+        }
+
+        @Override
+        public void insertBefore(E value) {
+            if (previous == null) {
+                list.insertFirst(value);
+                reset();
+            }
+            else {
+                Entry newItem = new Entry(value);
+                newItem.setNext(current);
+                newItem.setPrevious(previous);
+                previous.setNext(newItem);
+                current.setPrevious(newItem);
+
+                current = newItem;
+            }
+        }
+
+        @Override
+        public void insertAfter(E value) {
+            if (list.isEmpty()){
+                list.insertFirst(value);
+                reset();
+            } else {
+                Entry newItem = new Entry(value);
+                Entry next = current.getNext();
+                newItem.setNext(next);
+                newItem.setPrevious(current);
+                current.setNext(newItem);
+                if (next != null) {
+                    next.setPrevious(newItem);
+                }
+                next();
+            }
+        }
     }
 }
