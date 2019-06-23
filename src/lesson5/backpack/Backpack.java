@@ -24,15 +24,6 @@ public class Backpack implements Comparable<Backpack>{
         return true;
     }
 
-    public boolean remove(Item item) {
-        if (items.remove(item)) {
-            weight =- item.getWeight();
-            price =- item.getPrice();
-            return true;
-        }
-        return false;
-    }
-
     private boolean notFits(Item item) {
         return (weight + item.getWeight() > maxWeight);
     }
