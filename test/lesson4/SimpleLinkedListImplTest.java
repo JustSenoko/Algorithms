@@ -123,4 +123,13 @@ public class SimpleLinkedListImplTest {
         }
         assertFalse(iterator.hasNext());
     }
+
+    @Test
+    public void iteratorForEach() {
+        Integer i = 5;
+        for (Integer value : list) {
+            assertEquals(i, value);
+            i--;
+        }
+    }
 }
