@@ -29,7 +29,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
         if (nodeAndParent.current != null) {
             return false;
         }
-        if (nodeAndParent.depth >= maxHeight) {
+        if (nodeAndParent.height >= maxHeight) {
             throw new IndexOutOfBoundsException("Превышена максимальная высота дерева");
             //return false;
         }
@@ -286,12 +286,12 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private class NodeAndParent {
         Node<E> current;
         Node<E> parent;
-        int depth;
+        int height;
 
-        NodeAndParent(Node<E> current, Node<E> parent, int depth) {
+        NodeAndParent(Node<E> current, Node<E> parent, int height) {
             this.current = current;
             this.parent = parent;
-            this.depth = depth;
+            this.height = height;
         }
     }
 }
