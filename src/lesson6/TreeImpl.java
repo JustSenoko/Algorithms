@@ -267,7 +267,11 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     }
 
     @Override
-    public boolean isBalanced(Node node) {
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node node) {
         return (node == null) ||
                 isBalanced(node.getLeftChild()) &&
                         isBalanced(node.getRightChild()) &&

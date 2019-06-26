@@ -23,7 +23,7 @@ public class Main {
                 }
             } while (true);
             //tree.display();
-            if (tree.isBalanced(tree.getRoot())) {
+            if (tree.isBalanced()) {
                 balancedCount++;
             }
         }

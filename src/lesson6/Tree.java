@@ -22,7 +22,7 @@ public interface Tree<E> {
 
     void display();
 
-    boolean isBalanced(Node node);
+    boolean isBalanced();
 
     Node getRoot();
 
