@@ -10,12 +10,12 @@ public class Graph {
     private int size;
 
 
-    public Graph(int maxVertexCount) {
+    Graph(int maxVertexCount) {
         this.vertexList = new ArrayList<>(maxVertexCount);
         this.adjMat = new boolean[maxVertexCount][maxVertexCount];
     }
 
-    public void addVertex(String label) {
+    void addVertex(String label) {
         vertexList.add(new Vertex(label));
         size++;
     }
@@ -28,14 +28,14 @@ public class Graph {
         return  getSize() == 0;
     }
 
-    public void addEdges(String start, String second, String... others) {
+    void addEdges(String start, String second, String... others) {
         addEdge(start, second);
         for (String another : others) {
             addEdge(start, another);
         }
     }
 
-    public void addEdge(String start, String finish) {
+    private void addEdge(String start, String finish) {
         int startIndex =  indexOf(start);
         int finishIndex = indexOf(finish);
 
@@ -112,25 +112,25 @@ public class Graph {
 
         Queue<Vertex> queue = new LinkedList<>();
         Vertex vertex = vertexList.get(startIndex);
-        visitVertex(queue, vertex);
+        visitVertex(queue, vertex, true);
 
-        while ( !queue.isEmpty() ) {
+        while (!queue.isEmpty()) {
             vertex = getNearUnvisitedVertex(queue.peek());
             if (vertex != null) {
-                visitVertex(queue, vertex);
+                visitVertex(queue, vertex, true);
             }
             else {
                 queue.remove();
             }
         }
-
         resetVertexState();
-
     }
 
     private void resetVertexState() {
         for (int i = 0; i < size; i++) {
-            vertexList.get(i).setVisited(false);
+            Vertex v = vertexList.get(i);
+            v.setVisited(false);
+            v.setPrevious(null);
         }
     }
 
@@ -151,9 +151,59 @@ public class Graph {
         vertex.setVisited(true);
     }
 
-    private void visitVertex(Queue<Vertex> queue, Vertex vertex) {
-        displayVertex(vertex);
+    private void visitVertex(Queue<Vertex> queue, Vertex vertex, boolean display) {
+        if (display) {
+            displayVertex(vertex);
+        }
+        vertex.setPrevious(queue.peek());
         queue.add(vertex);
         vertex.setVisited(true);
+
+    }
+
+    void displayShortestPath(String startLabel, String finishLabel) {
+
+        int startIndex = indexOf(startLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Invalid startLabel: " + startLabel);
+        }
+        int finishIndex = indexOf(finishLabel);
+        if (finishIndex == -1) {
+            throw new IllegalArgumentException("Invalid finishLabel: " + finishLabel);
+        }
+
+        Queue<Vertex> queue = new LinkedList<>();
+
+        Vertex vertex = vertexList.get(finishIndex);
+        visitVertex(queue, vertex, false);
+
+        while ( !queue.isEmpty() ) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+            if (vertex != null) {
+                visitVertex(queue, vertex, false);
+                if (vertex.getLabel().equals(startLabel)) {
+                    break;
+                }
+            }
+            else {
+                queue.remove();
+            }
+        }
+
+        if (queue.isEmpty()) {
+            System.out.printf("Path from %s to %s not found.%n", startLabel, finishLabel);
+        } else {
+            showPath(vertexList.get(startIndex));
+        }
+        resetVertexState();
+    }
+
+    private void showPath(Vertex start) {
+        Vertex current = start;
+        while (current != null){
+            System.out.printf("%s   ", current.getLabel());
+            current = current.getPrevious();
+        }
+        System.out.println();
     }
 }

@@ -6,13 +6,22 @@ public class Vertex {
 
     private final String label;
     private boolean visited;
+    private Vertex previous;
 
-    public Vertex(String label) {
+    Vertex(String label) {
         this.label = label;
     }
 
-    public String getLabel() {
+    String getLabel() {
         return label;
+    }
+
+    void setPrevious(Vertex previous) {
+        this.previous = previous;
+    }
+
+    Vertex getPrevious() {
+        return previous;
     }
 
     @Override
@@ -35,11 +44,11 @@ public class Vertex {
                 '}';
     }
 
-    public boolean isVisited() {
+    boolean isVisited() {
         return visited;
     }
 
-    public void setVisited(boolean visited) {
+    void setVisited(boolean visited) {
         this.visited = visited;
     }
 }
